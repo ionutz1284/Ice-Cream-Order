@@ -48,13 +48,15 @@ public class FlavorPanel extends JPanel
 	{
 		double flavorcost;
 		flavorcost = FLAVOR_COST;
-		return flavorcost;
-		/**
-		 writeFlavortoFile method
-		 */
+		return flavorcost;	
 	}
+	
+	/**
+	 writeFlavortoFile method write the flavor to the file
+	 */
 	public void writeFlavortoFile() throws IOException
 	{
+		clearFile();  // calls the clear() method to clear the file before writing to it
 		FileWriter fwriter1 = new FileWriter("icecream.txt", true);
 		PrintWriter outputFile = new PrintWriter (fwriter1);
 		if(vanilla.isSelected())
@@ -63,28 +65,44 @@ public class FlavorPanel extends JPanel
 			outputFile.println("Chocolate");
 		else if(strawberry.isSelected())
 			outputFile.println("Strawberry");
-		outputFile.close();
-		/**
-		 restore FlavoretoFile method
-		 */
-			
+		outputFile.close();		
 	}
+	
+	/*
+	 method the clears the file 
+	 */
+	public static void clearFile() throws IOException
+	{
+		FileWriter fwriter = new FileWriter("icecream.txt", false);
+		PrintWriter outputFile = new PrintWriter (fwriter,false);
+		outputFile.flush();
+		outputFile.close();
+	}
+	
+	/**
+	 restore FlavoretoFile method
+	 */
 	public void restoreFlavor() throws IOException
 	{
 		File file = new File("icecream.txt");
 		Scanner inputfile = new Scanner(file);
-		String input = "";
-		while(inputfile.hasNext())
-				
-			input = inputfile.nextLine();
+		String input = inputfile.nextLine();
 		
-			if(input=="Vanilla")
+			if(input.equalsIgnoreCase("Vanilla"))
+			{
 				vanilla.doClick();
-			else if(input == "Chocolate")
+			}
+				else if(input.equalsIgnoreCase("Chocolate"))
+			{
+				
 				chocolate.doClick();
-			else if(input=="Strawberry")
+			}
+			
+			else if(input.equalsIgnoreCase("Strawberry"))
+			{
 				strawberry.doClick();
-			inputfile.close();
+			}
+				inputfile.close();
 			
 	}
 }
